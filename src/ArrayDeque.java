@@ -1,6 +1,4 @@
-import java.util.Arrays;
-
-public class ArrayDeque2 <T> {
+public class ArrayDeque<T> {
     private Object[] headArray;
     private Object[] tailArray;
     private int headIndex;
@@ -8,7 +6,7 @@ public class ArrayDeque2 <T> {
     private Object head;
     private Object tail;
 
-    public ArrayDeque2() {
+    public ArrayDeque() {
         headArray = new Object[8];
         tailArray = new Object[8];
         headIndex = 0;
@@ -17,16 +15,26 @@ public class ArrayDeque2 <T> {
 
     private Object[] checkArrayResize(Object[] a) {
 
-        int newArraySize = a.length * 2;
+        int newArraySizeBigger = a.length * 2;
+        int newArraySizeSmaller = a.length / 2;
+        int quarterSize = a.length / 4;
 
         if(a[a.length-1] != null) {
-            Object[] aTemp = new Object[newArraySize];
+            Object[] aTemp = new Object[newArraySizeBigger];
 
             System.arraycopy(a, 0, aTemp, 0, a.length);
 
             return aTemp;
 
-        } else {
+        } else if(a[quarterSize - 1] != null && a[quarterSize] == null) {
+            Object[] aTemp = new Object[newArraySizeSmaller];
+
+            System.arraycopy(a, 0, aTemp, 0, a.length);
+
+            return aTemp;
+        }
+
+        else {
 
 //            System.out.println("Array not ready to be resized");
             return a;
@@ -163,7 +171,7 @@ public class ArrayDeque2 <T> {
 //    }
 
     public static void main (String[] args) {
-        ArrayDeque2<Integer> aD2 = new ArrayDeque2<>();
+        ArrayDeque<Integer> aD2 = new ArrayDeque<>();
         aD2.addHead(1);
         aD2.printItem((Integer) aD2.retrieveHead());
         aD2.printItem((Integer) aD2.retrieveTail());

@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/ArrayDequeTake2.iml" filepath="$PROJECT_DIR$/ArrayDequeTake2.iml" />
+      <module fileurl="file://$PROJECT_DIR$/ArrayDeque.iml" filepath="$PROJECT_DIR$/ArrayDeque.iml" />
     </modules>
   </component>
 </project>
