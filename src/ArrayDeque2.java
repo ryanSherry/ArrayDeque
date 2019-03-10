@@ -28,7 +28,7 @@ public class ArrayDeque2 <T> {
 
         } else {
 
-            System.out.println("Array not ready to be resized");
+//            System.out.println("Array not ready to be resized");
             return a;
 
         }
@@ -64,12 +64,13 @@ public class ArrayDeque2 <T> {
             }
 
             tailArray = tempArray;
+            tailIndex--;
 
             return itemToPop;
         } else {
-            Object itemToPop = tailArray[tailIndex];
-            tailArray[tailIndex] = null;
-            tailIndex --;
+            Object itemToPop = headArray[headIndex - 1];
+            headArray[headIndex - 1] = null;
+            headIndex --;
             return itemToPop;
         }
     }
@@ -82,19 +83,20 @@ public class ArrayDeque2 <T> {
 
             Object itemToPop = headArray[0];
 
-            Object[] tempArray = new Object[tailArray.length];
+            Object[] tempArray = new Object[headArray.length];
 
             for (int i = 0; i < headArray.length - 1; i++) {
                 tempArray[i] = headArray[i+1];
             }
 
             headArray = tempArray;
+            headIndex--;
 
             return itemToPop;
         } else {
-            Object itemToPop = headArray[headIndex];
-            headArray[headIndex] = null;
-            headIndex --;
+            Object itemToPop = tailArray[tailIndex - 1];
+            tailArray[tailIndex - 1] = null;
+            tailIndex--;
             return itemToPop;
         }
     }
@@ -125,30 +127,40 @@ public class ArrayDeque2 <T> {
         System.out.println(item);
     }
 
-    public void printArray() {
-        Object[] ha = headArrayPrintHelper(headArray, headIndex);
-        Object[] ta = tailArrayPrintHelper(tailArray,tailIndex);
-        System.out.println(Arrays.toString(ha) + Arrays.toString(ta));
-    }
+    private void printHelper() {
 
-    private Object[] headArrayPrintHelper(Object[] a, int aLength) {
-        Object[] aReversedTemp = new Object[aLength];
-        int j = aLength;
+        StringBuilder sb = new StringBuilder();
+        int j = headIndex;
 
-        for (int i = 0; i < aLength; i++) {
-            aReversedTemp[j - 1] = a[i];
+        for (int i = 0; i < j + 1; i++) {
+            sb.append(headArray[j - 1]);
+            sb.append(", ");
+
+            if (i == headIndex - 1 && tailArray[0] == null) {
+                break;
+            }
+
             j--;
         }
-        return aReversedTemp;
+
+        int k = tailIndex;
+        for (int i = 0; i < k; i++) {
+            sb.append(tailArray[i]);
+
+            if (i != tailIndex - 1) {
+                sb.append(", ");
+            }
+        }
+        System.out.println(sb.toString());
     }
 
-    private Object[] tailArrayPrintHelper(Object[] a, int aLength) {
-        Object[] aTemp = new Object[aLength];
-        for (int i = 0; i < aLength; i++) {
-            aTemp[i] = a[i];
-        }
-        return aTemp;
-    }
+//    private Object[] tailArrayPrintHelper(Object[] a, int aLength) {
+//        Object[] aTemp = new Object[aLength];
+//        for (int i = 0; i < aLength; i++) {
+//            aTemp[i] = a[i];
+//        }
+//        return aTemp;
+//    }
 
     public static void main (String[] args) {
         ArrayDeque2<Integer> aD2 = new ArrayDeque2<>();
@@ -164,7 +176,16 @@ public class ArrayDeque2 <T> {
         aD2.addHead(4);
         aD2.printItem((Integer) aD2.retrieveHead());
         aD2.printItem((Integer) aD2.retrieveTail());
-        aD2.printArray();
+        aD2.printHelper();
+        aD2.popHead();
+        aD2.printItem((Integer) aD2.retrieveHead());
+        aD2.printItem((Integer) aD2.retrieveTail());
+        aD2.popHead();
+        aD2.printItem((Integer) aD2.retrieveHead());
+        aD2.printItem((Integer) aD2.retrieveTail());
+        aD2.popHead();
+        aD2.printItem((Integer) aD2.retrieveHead());
+        aD2.printItem((Integer) aD2.retrieveTail());
 
     }
 
